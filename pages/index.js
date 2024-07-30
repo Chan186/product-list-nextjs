@@ -4,16 +4,16 @@ import Timestamp from '../components/Timestamp';
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 
-export default function Home({ products }) {
+export default function Home({ products , currentTimestamp}) {
   const [isClient, setIsClient] = useState(false)
   useEffect(() => {
     setIsClient(true)
   }, [])
   return (
-    <div>
+    <>
       <ProductList products={products} />
-      {isClient && <Timestamp />}
-    </div>
+      {isClient && <Timestamp currentTimestamp={currentTimestamp} />}
+    </>
   )
 }
 
@@ -29,10 +29,12 @@ export const getStaticProps = async () => {
     };
 
     const randomPosts = getRandomPosts(allPosts, 2);
+    const currentTimestamp = new Date().toISOString();
 
     return {
       props: {
-        products: randomPosts, 
+        products: randomPosts,
+        currentTimestamp, 
       },
     };
   } catch (error) {
@@ -40,6 +42,7 @@ export const getStaticProps = async () => {
     return {
       props: {
         products: [],
+        currentTimestamp: new Date(),
       },
     };
   }

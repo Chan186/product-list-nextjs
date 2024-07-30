@@ -3,16 +3,16 @@ import Timestamp from '../components/Timestamp';
 import { useState, useEffect } from 'react'
 import axios from 'axios';
 
-export default function AnotherPage({ products }) {
+export default function AnotherPage({ products , currentTimestamp}) {
   const [isClient, setIsClient] = useState(false)
   useEffect(() => {
     setIsClient(true)
   }, [])
   return (
-    <div>
+    <>
       <ProductList products={products} />
-      {isClient && <Timestamp />}
-    </div>
+      {isClient && <Timestamp currentTimestamp={currentTimestamp} />}
+    </>
   )
 }
 
@@ -26,10 +26,12 @@ export const getServerSideProps = async () => {
   };
 
   const randomPosts = getRandomPosts(allPosts, 2);
+  const currentTimestamp = new Date().toISOString();
 
   return {
     props: {
-      products: randomPosts, 
+      products: randomPosts,
+      currentTimestamp,  
     },
   };
 };

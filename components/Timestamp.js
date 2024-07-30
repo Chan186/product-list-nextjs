@@ -1,8 +1,7 @@
 import { format } from 'date-fns';
 
-const Timestamp = () => {
-  const currentTimestamp = new Date();
-  const formattedTimestamp = format(currentTimestamp, 'dd-MM-yyyy hh:mm:ss a');
+const Timestamp = ({ currentTimestamp }) => {
+  const formattedTimestamp = format(new Date(currentTimestamp), 'dd-MM-yyyy hh:mm:ss a');
 
   return (
     <>
@@ -12,6 +11,3 @@ const Timestamp = () => {
 };
 
 export default Timestamp;
-
-
-

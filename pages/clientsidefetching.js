@@ -26,10 +26,11 @@ export default function ClientSideFetching() {
   useEffect(() => {
     setIsClient(true)
   }, [])
+  const currentTimestamp = new Date().toISOString();
   return (
-    <div>
+    <>
       <ProductList products={products} />
-      {isClient && <Timestamp />}
-    </div>
+      {isClient && <Timestamp currentTimestamp={currentTimestamp} />}
+    </>
   )
 }
