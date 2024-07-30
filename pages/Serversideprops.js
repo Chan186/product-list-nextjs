@@ -1,6 +1,7 @@
 import ProductList from '../components/ProductList';
 import Timestamp from '../components/Timestamp';
 import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 export default function AnotherPage({ products }) {
   const [isClient, setIsClient] = useState(false)
@@ -16,8 +17,8 @@ export default function AnotherPage({ products }) {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('https://fakestoreapi.com/products');
-  const allPosts = await res.json();
+  const res = await axios.get('https://fakestoreapi.com/products');
+  const allPosts = res.data;
 
   const getRandomPosts = (posts, numPosts) => {
     const shuffled = posts.sort(() => 0.5 - Math.random()); // Shuffle array

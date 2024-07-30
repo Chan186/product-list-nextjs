@@ -2,6 +2,7 @@
 import ProductList from '../components/ProductList'
 import Timestamp from '../components/Timestamp';
 import { useState, useEffect } from 'react'
+import axios from 'axios';
 
 export default function Home({ products }) {
   const [isClient, setIsClient] = useState(false)
@@ -17,22 +18,29 @@ export default function Home({ products }) {
 }
 
 
-
-
 export const getStaticProps = async () => {
-  const res = await fetch('https://fakestoreapi.com/products');
-  const allPosts = await res.json();
+  try {
+    const res = await axios.get('https://fakestoreapi.com/products');
+    const allPosts = res.data;
 
-  const getRandomPosts = (posts, numPosts) => {
-    const shuffled = posts.sort(() => 0.5 - Math.random()); // Shuffle array
-    return shuffled.slice(0, numPosts); 
-  };
+    const getRandomPosts = (posts, numPosts) => {
+      const shuffled = posts.sort(() => 0.5 - Math.random()); // Shuffle array
+      return shuffled.slice(0, numPosts); 
+    };
 
-  const randomPosts = getRandomPosts(allPosts, 2);
+    const randomPosts = getRandomPosts(allPosts, 2);
 
-  return {
-    props: {
-      products: randomPosts, 
-    },
-  };
+    return {
+      props: {
+        products: randomPosts, 
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return {
+      props: {
+        products: [],
+      },
+    };
+  }
 };

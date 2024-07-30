@@ -5,9 +5,9 @@ const Timestamp = () => {
   const formattedTimestamp = format(currentTimestamp, 'dd-MM-yyyy hh:mm:ss a');
 
   return (
-    <div>
+    <>
       <p>Current timestamp: {formattedTimestamp}</p>
-    </div>
+    </>
   );
 };
 

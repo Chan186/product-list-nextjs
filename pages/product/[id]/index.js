@@ -1,5 +1,6 @@
 
 import Link from 'next/link'
+import axios from 'axios';
 
 
 const product = ({ product }) => {
@@ -14,11 +15,8 @@ const product = ({ product }) => {
 }
 
 export const getStaticProps = async (context) => {
-  const res = await fetch(
-    `https://fakestoreapi.com/products/${context.params.id}`
-  )
-
-  const product = await res.json()
+  const res = await axios.get(`https://fakestoreapi.com/products/${context.params.id}`);
+  const product = res.data;
 
   return {
     props: {
@@ -28,9 +26,8 @@ export const getStaticProps = async (context) => {
 }
 
 export const getStaticPaths = async () => {
-  const res = await fetch(`https://fakestoreapi.com/products`)
-
-  const products = await res.json()
+  const res = await axios.get('https://fakestoreapi.com/products');
+  const products = res.data;
 
   const ids = products.map((product) => product.id)
   const paths = ids.map((id) => ({ params: { id: id.toString() } }))
